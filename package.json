@@ -1,0 +1,37 @@
+{
+  "name": "@addisu/firestore_crud",
+  "version": "1.0.0",
+  "description": "Simple CRUD operation on Firestore database",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/addisudamena/npm_datafire_package.git"
+  },
+  "keywords": [
+    "firestore",
+    "firebase",
+    "database",
+    "CRUD",
+    "Node.js"
+  ],
+  "author": "Addisu Alemu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/addisudamena/npm_datafire_package/issues"
+  },
+  "homepage": "https://github.com/addisudamena/npm_datafire_package#readme",
+  "dependencies": {
+    "firebase": "^10.6.0",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.2"
+  }
+}

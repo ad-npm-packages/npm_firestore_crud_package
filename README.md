@@ -1,21 +1,90 @@
-# npm_datafire_package
+Certainly! Here's the entire README.md content enclosed within triple backticks for easy copying:
 
-Welcome to `npm_datafire_package`, a streamlined Node.js package for performing CRUD (Create, Read, Update, Delete) operations on Google's Firestore database. This package simplifies the process of interacting with Firestore, making it more accessible for Node.js developers.
+perlCopy code
+# Firestore CRUD Service
 
-## Features
+    A simple and efficient Node.js package for performing CRUD (Create, Read, Update, Delete) operations on Google Firestore. This package provides a generic `DataService` class that can be used with any Firestore collection.
+    
+    ## Features
+    
+    - Easy-to-use CRUD operations for Firestore.
+    - Generic implementation that can work with any data structure.
+    - TypeScript support for strong typing and IntelliSense in IDEs.
+    
+    ## Installation
+    
+    To install the package, run the following command in your Node.js project:
+    
+    ```bash
+    npm install @addisu/firestore_crud
+    
+Setup
+Before using the DataService, ensure you have set up Firebase in your project and have your Firebase configuration object ready.
 
-- Simple and intuitive API for Firestore operations.
-- Comprehensive CRUD (Create, Read, Update, Delete) functionality.
-- Support for batch operations and transactions.
-- Real-time updates with Firestore.
-- Advanced query capabilities.
-- Compatibility with Firestore security rules.
+Usage
+Here's a quick example to get you started:
 
-## Installation
+typescriptCopy code
+import DataService from '@addisu/firestore_crud';
+    import { DocumentData } from 'firebase/firestore';
+    
+    // Define your data type (optional)
+    interface MyData extends DocumentData {
+      name: string;
+      age: number;
+    }
+    
+    // Firebase configuration
+    const firebaseConfig = {
+      // your firebase configuration object
+    };
+    
+    // Initialize the DataService
+    const dataService = new DataService<MyData>(firebaseConfig);
+    
+    // Example usage
+    async function demo() {
+      // Add data
+      const docId = await dataService.addData('myCollection', { name: 'John Doe', age: 30 });
+    
+      // Get data
+      const data = await dataService.getData('myCollection');
+      console.log(data);
+    
+      // Update data
+      await dataService.updateData('myCollection', docId, { age: 31 });
+    
+      // Delete data
+      await dataService.deleteData('myCollection', docId);
+    }
+    
+    demo();
+    
+API Reference
+getData(collectionName: string): Promise<T[]>
+Fetches all documents from the specified collection.
 
-Ensure you have Node.js installed on your system. If not, download it from [Node.js official website](https://nodejs.org/).
+getDataById(collectionName: string, id: string): Promise<T>
+Fetches a single document by its ID from the specified collection.
 
-Install `npm_datafire_package` using npm:
+addData(collectionName: string, data: T): Promise<string>
+Adds a new document to the specified collection and returns the new document's ID.
 
-```bash
-npm install npm_datafire_package
+updateData(collectionName: string, id: string, data: Partial<T>): Promise<void>
+Updates the specified fields of a document in the specified collection.
+
+deleteData(collectionName: string, id: string): Promise<void>
+Deletes a document from the specified collection.
+
+Contributing
+Contributions, issues, and feature requests are welcome. Feel free to check issues page if you want to contribute.
+
+License
+ISC
+
+This README is a basic template and should be modified to better fit your package's functionality and usage.
+
+cssCopy code
+
+    This format is ready for use in a Markdown file, such as a `README.md` for a GitHub repository.
+    
