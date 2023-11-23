@@ -2,7 +2,7 @@ name: Publish to npm
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   publish:
@@ -22,7 +22,7 @@ jobs:
       run: npm install
 
     - name: Build package
-      run: npm run build # Replace with your build command
+      run: npx ts
 
     - name: Publish to npm
       run: npm publish
