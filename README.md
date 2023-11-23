@@ -1,87 +1,75 @@
-# Firestore CRUD Service
+# Firebase CRUD Package
 
-    A simple and efficient Node.js package for performing CRUD (Create, Read, Update, Delete) operations on Google Firestore. This package provides a generic `DataService` class that can be used with any Firestore collection.
-    
-    ## Features
-    
-    - Easy-to-use CRUD operations for Firestore.
-    - Generic implementation that can work with any data structure.
-    - TypeScript support for strong typing and IntelliSense in IDEs.
-    
-    ## Installation
-    
-    To install the package, run the following command in your Node.js project:
-    
-    ```bash
-    npm install @addisu/firestore_crud
-    
-Setup
-Before using the DataService, ensure you have set up Firebase in your project and have your Firebase configuration object ready.
+This package provides a simplified way to perform CRUD (Create, Read, Update, Delete) operations in Firebase. It's designed to make working with Firebase more intuitive and straightforward in your web and mobile applications.
 
-Usage
-Here's a quick example to get you started:
+## Installation
 
-typescriptCopy code
-import DataService from '@addisu/firestore_crud';
-    import { DocumentData } from 'firebase/firestore';
-    
-    // Define your data type (optional)
-    interface MyData extends DocumentData {
-      name: string;
-      age: number;
-    }
-    
-    // Firebase configuration
-    const firebaseConfig = {
-      // your firebase configuration object
-    };
-    
-    // Initialize the DataService
-    const dataService = new DataService<MyData>(firebaseConfig);
-    
-    // Example usage
-    async function demo() {
-      // Add data
-      const docId = await dataService.addData('myCollection', { name: 'John Doe', age: 30 });
-    
-      // Get data
-      const data = await dataService.getData('myCollection');
-      console.log(data);
-    
-      // Update data
-      await dataService.updateData('myCollection', docId, { age: 31 });
-    
-      // Delete data
-      await dataService.deleteData('myCollection', docId);
-    }
-    
-    demo();
-    
-API Reference
-getData(collectionName: string): Promise<T[]>
-Fetches all documents from the specified collection.
+To install the Firebase CRUD package, run the following command:
 
-getDataById(collectionName: string, id: string): Promise<T>
-Fetches a single document by its ID from the specified collection.
+``` npm install firebase-crud-package```
+## Usage
 
-addData(collectionName: string, data: T): Promise<string>
-Adds a new document to the specified collection and returns the new document's ID.
+Here's a quick example to get you started with the Firebase CRUD package:
 
-updateData(collectionName: string, id: string, data: Partial<T>): Promise<void>
-Updates the specified fields of a document in the specified collection.
+```import FirebaseCRUD from 'firebase-crud-package';```
 
-deleteData(collectionName: string, id: string): Promise<void>
-Deletes a document from the specified collection.
 
-Contributing
-Contributions, issues, and feature requests are welcome. Feel free to check issues page if you want to contribute.
+``` const db = new FirebaseCRUD(yourFirebaseConfig); ```
 
-License
-ISC
+// Create data
 
-This README is a basic template and should be modified to better fit your package's functionality and usage.
+``` db.create('collectionName', { field: 'value' }); ```
 
-cssCopy code
+// Read data
 
-    This format is ready for use in a Markdown file, such as a `README.md` for a GitHub repository.
-    
+``` db.read('collectionName', 'documentId'); ```
+
+// Update data
+
+``` db.update('collectionName', 'documentId', { updatedField: 'newValue' }); ```
+
+// Delete data
+
+``` db.delete('collectionName', 'documentId'); ```
+
+## Features
+
+- Easy to set up and integrate with Firebase.
+- Simplified methods for CRUD operations.
+- Realtime data synchronization capabilities.
+- Support for batch operations.
+- Secure data manipulation in line with Firebase's security rules.
+
+## Contributing
+
+Contributions to the Firebase CRUD package are welcome! Here's how you can contribute:
+
+1. Fork the repository.
+2. Create a new branch: ``` git checkout -b my-new-feature ```
+3. Make your changes and commit them: ``` git commit -am 'Add some feature' ```
+4. Push to the branch: ``` git push origin my-new-feature ```
+5. Submit a pull request.
+
+## License
+
+MIT License
+
+Copyright (c) 2023 Addisu Alemu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
