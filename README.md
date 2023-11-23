@@ -1,6 +1,3 @@
-Certainly! Here's the entire README.md content enclosed within triple backticks for easy copying:
-
-perlCopy code
 # Firestore CRUD Service
 
     A simple and efficient Node.js package for performing CRUD (Create, Read, Update, Delete) operations on Google Firestore. This package provides a generic `DataService` class that can be used with any Firestore collection.
