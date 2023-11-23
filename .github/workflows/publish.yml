@@ -19,12 +19,6 @@ jobs:
         node-version: '14'
         registry-url: 'https://registry.npmjs.org'
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build package
-      run: npx ts
-
     - name: Publish to npm
       run: npm publish
       env:
