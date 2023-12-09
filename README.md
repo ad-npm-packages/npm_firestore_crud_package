@@ -6,15 +6,15 @@ This package provides a simplified way to perform CRUD (Create, Read, Update, De
 
 To install the Firebase CRUD package, run the following command:
 
-``` npm install firebase-crud-package```
+``` npm install firebase_crud```
 ## Usage
 
 Here's a quick example to get you started with the Firebase CRUD package:
 
-```import FirebaseCRUD from 'firebase-crud-package';```
+```import DataService from 'firebase_crud';```
 
 
-``` const db = new FirebaseCRUD(yourFirebaseConfig); ```
+``` const db = new DataService(yourFirebaseConfig); ```
 
 // Create data
 
