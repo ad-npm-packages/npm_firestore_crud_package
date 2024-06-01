@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/addisudamena/npm_datafire_package.git"
+    "url": "https://github.com/ad-npm-packages/npm_firestore_crud_package"
   },
   "keywords": [
     "firestore",
@@ -25,9 +25,9 @@
   "author": "Addisu Alemu",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/addisudamena/npm_datafire_package/issues"
+    "url": "https://github.com/ad-npm-packages/npm_firestore_crud_package/issues"
   },
-  "homepage": "https://github.com/addisudamena/npm_datafire_package#readme",
+  "homepage": "https://github.com/ad-npm-packages/npm_firestore_crud_package#readme",
   "dependencies": {
     "firebase": "^10.6.0",
     "rxjs": "^7.8.1"
