@@ -1,29 +1,40 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { Firestore, getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc, getDoc, DocumentData, DocumentReference, UpdateData } from 'firebase/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, from, map, catchError, throwError } from 'rxjs';
 
 class DataService<T extends DocumentData> {
   private app: FirebaseApp;
   private firestore: Firestore;
+  private collectionName: string;
 
-  constructor(firebaseConfig: Object) {
+  constructor(firebaseConfig: Object, collectionName: string) {
     if (!getApps().length) {
       this.app = initializeApp(firebaseConfig);
     } else {
-      this.app = getApp(); // if already initialized, use that one
+      this.app = getApp();
     }
     this.firestore = getFirestore(this.app);
+    this.collectionName = collectionName;
   }
 
-  getData(collectionName: string): Observable<T[]> {
-    const dataRef = collection(this.firestore, collectionName);
+  private getCollectionRef() {
+    return collection(this.firestore, this.collectionName);
+  }
+
+  private getDocRef(id: string) {
+    return doc(this.firestore, this.collectionName, id);
+  }
+
+  getData(): Observable<T[]> {
+    const dataRef = this.getCollectionRef();
     return from(getDocs(dataRef)).pipe(
-      map(snapshot => snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }) as unknown as T))
+      map(snapshot => snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }) as unknown as T)),
+      catchError(error => throwError(() => new Error(`Failed to fetch data: ${error.message}`)))
     );
   }
 
-  getDataById(collectionName: string, id: string): Observable<T> {
-    const dataRef = doc(this.firestore, collectionName, id);
+  getDataById(id: string): Observable<T> {
+    const dataRef = this.getDocRef(id);
     return from(getDoc(dataRef)).pipe(
       map(docSnapshot => {
         if (docSnapshot.exists()) {
@@ -31,25 +42,31 @@ class DataService<T extends DocumentData> {
         } else {
           throw new Error('Document not found');
         }
-      })
+      }),
+      catchError(error => throwError(() => new Error(`Failed to fetch document by ID: ${error.message}`)))
     );
   }
 
-  addData(collectionName: string, data: T): Observable<string> {
-    const dataRef = collection(this.firestore, collectionName);
+  addData(data: T): Observable<string> {
+    const dataRef = this.getCollectionRef();
     return from(addDoc(dataRef, data)).pipe(
-      map(docRef => docRef.id)
+      map(docRef => docRef.id),
+      catchError(error => throwError(() => new Error(`Failed to add data: ${error.message}`)))
     );
   }
 
-  deleteData(collectionName: string, id: string): Observable<void> {
-    const dataRef = doc(this.firestore, collectionName, id);
-    return from(deleteDoc(dataRef));
+  deleteData(id: string): Observable<void> {
+    const dataRef = this.getDocRef(id);
+    return from(deleteDoc(dataRef)).pipe(
+      catchError(error => throwError(() => new Error(`Failed to delete document: ${error.message}`)))
+    );
   }
 
-  updateData(collectionName: string, id: string, data: UpdateData<T>): Observable<void> {
-    const dataRef = doc(this.firestore, collectionName, id) as DocumentReference<DocumentData, T>;
-    return from(updateDoc(dataRef, data));
+  updateData(id: string, data: UpdateData<T>): Observable<void> {
+    const dataRef = this.getDocRef(id) as DocumentReference<DocumentData, T>;
+    return from(updateDoc(dataRef, data)).pipe(
+      catchError(error => throwError(() => new Error(`Failed to update document: ${error.message}`)))
+    );
   }
 }
 
